@@ -1,0 +1,92 @@
+For main thing we have to do with data:
+Create 
+Read 
+Update 
+Destroy 
+
+
+Create :- 
+// this below code for making the format of table 
+CREATE TABLE products(
+    id INT NOT NULL , 
+    name STRING, 
+    price MONEY, 
+    PRIMARY KEY (id)
+)
+
+// adding elements into TABLE 
+INSERT INTO products
+VALUES (1, "Pen", 1.20)
+
+
+// adding only few values 
+INSERT INTO products(id, name)
+VALUES (2, "Pencil")
+
+
+// how to read the data from the table 
+* (star) means everything (select everything)
+SELECT * from products ;
+
+SELECT name, price from 'products' ;
+
+// HOW to only select a particular column 
+
+
+SELECT * FROM products WHERE ID = 1 
+
+
+
+/// Update THE table 
+UPDATE products 
+SET price = 0.80
+WHERE id = 2 
+
+
+
+// ALTER THE TABLE :- add, delete and  modifying the column
+
+ALTER TABLE products 
+ADD stock INT 
+
+// deleting elements from table 
+
+DELETE FROM products 
+WHERE id = 2 
+
+
+///  creating a order table for linking customers, products, order 
+
+
+CREATE TABLE orders (
+    id INT NOT NULL , 
+    order_number INT, 
+    customer_id INT , 
+    product_id INT, 
+    PRIMARY KEY (id) ,
+    FOREIGN KEY (customer_id) REFERENCES customers(id) ,
+    FOREIGN KEY (product_id) REFERENCES products(id)
+)
+
+
+// creating first order 
+
+INSERT INTO orders 
+VALUES (1, 4362, 2, 1) 
+
+
+// Joining the table together 
+// using inner join technique 
+/// here is the implementation of order joining with customers 
+SELECT orders.order_number,  customers.first_name, customers.last_name, customers.address 
+FROM orders 
+INNER JOIN customers ON orders.customer_id = customers.id 
+
+
+/// joining order to products
+SELECT orders.order_number, products.name , products.price , products.stock
+FROM orders 
+INNER JOIN products ON orders.product_id = products.id 
+
+
+
